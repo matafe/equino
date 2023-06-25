@@ -1,0 +1,32 @@
+<!doctype html>
+<html th:attr="lang=${lang}" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<title th:text="#{navigation.home}">Home</title>
+		<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<div th:replace="~{fragments/navigation :: navigation}"></div>  
+	
+		<main class="container">
+		  <div class="bg-body-tertiary p-5 rounded">
+		    <h1><span th:text="#{navigation.home}"></span></h1>
+		    <p class="lead" th:text="#{index.message}">This is an example webapp application to manager animals</p>
+		    <!-- <a class="btn btn-lg btn-primary" href="/docs/5.3/components/navbar/" role="button">View navbar docs &raquo;</a> -->
+		  </div>
+		  <!-- 
+			<button type="button" onclick="window.location.href='http://localhost:8080/?lang=en'">EN</button>
+			<button type="button" onclick="window.location.href='http://localhost:8080/?lang=pt_BR'">PT</button>
+		 	-->
+		</main>
+	
+		<div th:replace="~{fragments/footer :: footer}"></div>  
+		
+    </body>
+    
+</html>

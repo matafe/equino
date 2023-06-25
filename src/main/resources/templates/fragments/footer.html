@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<body>
+	<div class="container" th:fragment="footer">
+
+		<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{assets/inputmask/jquery.inputmask.min.js}"></script>
+		<script>
+		    $(":input").inputmask();
+		</script>
+		
+		<footer class="py-5">
+			<div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+				<p th:text="#{footer}">&copy; 2023, Inc. All rights reserved.</p>
+			</div>
+		</footer>
+</div>
+
+</body>
+
+</html>

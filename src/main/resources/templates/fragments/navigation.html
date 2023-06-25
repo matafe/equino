@@ -1,0 +1,52 @@
+<!doctype html>
+<html th:attr="lang=${lang}" xmlns:th="http://www.thymeleaf.org">
+	<body>
+		<nav th:fragment="navigation" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
+					aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" 
+								aria-expanded="false" th:text="#{navigation.add}">Add</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#"  th:href="@{/owner}" th:text="#{owner}">Owner</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/animal}" th:text="#{animal}">Animal</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/odontogram}" th:text="#{odontogram}">Odontograma</a></li>
+							</ul>
+						</li>					
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" 
+								aria-expanded="false" th:text="#{navigation.list}">List</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#"  th:href="@{/owners}" th:text="#{owners}">Owners</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/animals}" th:text="#{animals}">Animals</a></li>
+							</ul>
+						</li>					
+						<!-- 
+						<li class="nav-item">
+							<a class="nav-link active" th:class="${activePage == 'info' ? 'nav-link active' : 'nav-link'}" 
+								aria-current="page" href="#" th:href="@{/info}" th:text="#{navigation.info}">Info</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:class="${activePage == 'contact' ? 'nav-link active' : 'nav-link'}" 
+								href="#" th:href="@{/contact}" th:text="#{navigation.contact}">Contact</a>
+						</li>
+						 -->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Lang</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#" th:href="@{?lang=en}">English</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{?lang=pt_BR}">Português</a></li>
+							</ul>
+						</li>             
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</body>
+</html>
