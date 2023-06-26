@@ -24,7 +24,6 @@ RUN gradle clean build -x test
     
 # actual container
 FROM openjdk:17.0.1-jdk-slim
-#FROM adoptopenjdk/openjdk11:alpine-jre
 ENV ARTIFACT_NAME=equino-0.0.1-SNAPSHOT.jar
 ENV APP_HOME=/usr/app/
     
