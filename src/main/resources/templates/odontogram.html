@@ -23,23 +23,25 @@
 						
 							<div class="col-sm-12">
 								<label for="owner" class="form-label" th:text="#{owner}">Owner</label>:
-								<select class="form-select" id="owner" name="owner" th:onchange="changeOwner()">
+								<select class="form-select" id="owner" name="owner" th:onchange="changeOwner()" th:if="${owner == null}">
 					                <option value="" th:text="#{label.select}"></option>
-					                <option th:each="owner : ${owners}" 
-					                	th:value="${owner.id}"
-					                	th:text="${owner.name}">
+					                <option th:each="o : ${owners}" 
+					                	th:value="${o.id}"
+					                	th:text="${o.name}">
 					                	Select...
 					                </option>
 					            </select>
+					            <span th:text="${owner.name}" th:if="${owner != null}">Owners</span>
 							</div>	
 							
 							<div class="col-sm-12">
-								<label for="owner" class="form-label" th:text="#{animal}">Animal</label>:
-								<select class="form-select" id="animal" name="animal">
+								<label for="animal" class="form-label" th:text="#{animal}">Animal</label>:
+								<select class="form-select" id="animal" th:field="*{animal}" th:if="${odontogram.animal == null}">
 					                <option value="" th:text="#{label.select}"></option>
 					            </select>
-							</div>		
-
+					            <span th:text="${odontogram.animal.name}" th:if="${odontogram.animal != null}">Animal</span>
+							</div>
+							
 							<div class="col-sm-3">
 								<label for="checkUpDate" class="form-label" th:text="#{odontogram.checkUpDate}">CheckUpDate</label>:
 								<input type="date" class="form-control" th:errorclass="is-invalid" 
@@ -62,68 +64,69 @@
 								</div>							
 							</div>
 							
-							
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col"><label th:text="#{odontogram.teethWolf}">Wolf Teeth</label></th>
-							      <th scope="col"><label th:text="#{odontogram.teethIncisors}">Incisors</label></th>
-							      <th scope="col"><label th:text="#{odontogram.canines}">Canines</label></th>
-							      <th scope="col"><label th:text="#{odontogram.molars}">Molars</label></th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <td><label th:text="#{odontogram.teethWolfPresent}">Presents</label>:</td>
-							      <td><label th:text="#{odontogram.standard}">Normal</label>:</td>
-							      <td><label th:text="#{odontogram.present}">Presents</label>:</td>
-							      <td><label th:text="#{odontogram.hooks.rostr}">Hooks rostr</label>:</td>
-							    </tr>
-							    <tr>
-							      <td><label th:text="#{odontogram.teethWolfIncluded}">Included</label>:</td>
-							      <td><label th:text="#{odontogram.curv.ventr}">curv.ventr</label>:</td>
-							      <td><label th:text="#{odontogram.included}">Included</label>:</td>
-							      <td><label th:text="#{odontogram.hooks.caud}">Hooks caud</label>:</td>
-							    </tr>
-							    <tr>
-							      <td><label th:text="#{odontogram.teethWolfExtraction}">Extraction</label>:</td>
-							      <td><label th:text="#{odontogram.curv.dors}">curv.dors</label>:</td>
-							      <td><label th:text="#{odontogram.calculations}">Calculations</label>:</td>
-							      <td><label th:text="#{odontogram.ramp.rostr}">Ramp Rostr</label>:</td>
-							    </tr>
-							    <tr>
-							      <td></td>
-							      <td><label th:text="#{odontogram.diagonal}">Diagonal</label>:</td>
-							      <td><label th:text="#{odontogram.cutAndPol}">cutAndPol</label>:</td>
-							      <td><label th:text="#{odontogram.ramp.caud}">Ramp Caud</label>:</td>
-							    </tr>	
-							    <tr>
-							      <td></td>
-							      <td><label th:text="#{odontogram.deciduous}">Deciduous</label>:</td>
-							      <td></td>
-							      <td><label th:text="#{odontogram.step}">Step</label>:</td>
-							    </tr>	
-							    <tr>
-							      <td></td>
-							      <td><label th:text="#{odontogram.fractured}">Fractured</label>:</td>
-							      <td></td>
-							      <td><label th:text="#{odontogram.wave}">Wave</label>:</td>
-							    </tr>
-							    <tr>
-							      <td></td>
-							      <td></td>
-							      <td></td>
-							      <td><label th:text="#{odontogram.shear.mouth}">Shear Mouth</label>:</td>
-							    </tr>
-							    <tr>
-							      <td></td>
-							      <td></td>
-							      <td></td>
-							      <td><label th:text="#{odontogram.deciduous}">Deciduous</label>:</td>
-							    </tr>								        						    							    
-							  </tbody>
-							</table>							
-							
+							<div class="table-responsive text-nowrap">
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col"><label th:text="#{odontogram.teethWolf}">Wolf Teeth</label></th>
+								      <th scope="col"><label th:text="#{odontogram.teethIncisors}">Incisors</label></th>
+								      <th scope="col"><label th:text="#{odontogram.canines}">Canines</label></th>
+								      <th scope="col"><label th:text="#{odontogram.molars}">Molars</label></th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <td><label th:text="#{odontogram.teethWolfPresent}">Presents</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.standard}">Normal</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.present}">Presents</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.hooks.rostr}">Hooks rostr</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>
+								    <tr>
+								      <td><label th:text="#{odontogram.teethWolfIncluded}">Included</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.curv.ventr}" >curv.ventr</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.included}">Included</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.hooks.caud}">Hooks caud</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>
+								    <tr>
+								      <td><label th:text="#{odontogram.teethWolfExtraction}">Extraction</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.curv.dors}">curv.dors</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.calculations}">Calculations</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.ramp.rostr}">Ramp Rostr</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>
+								    <tr>
+								      <td></td>
+								      <td><label th:text="#{odontogram.diagonal}">Diagonal</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.cutAndPol}">cutAndPol</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td><label th:text="#{odontogram.ramp.caud}">Ramp Caud</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>	
+								    <tr>
+								      <td></td>
+								      <td><label th:text="#{odontogram.deciduous}">Deciduous</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td></td>
+								      <td><label th:text="#{odontogram.step}">Step</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>	
+								    <tr>
+								      <td></td>
+								      <td><label th:text="#{odontogram.fractured}">Fractured</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								      <td></td>
+								      <td><label th:text="#{odontogram.wave}">Wave</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>
+								    <tr>
+								      <td></td>
+								      <td></td>
+								      <td></td>
+								      <td><label th:text="#{odontogram.shear.mouth}">Shear Mouth</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>
+								    <tr>
+								      <td></td>
+								      <td></td>
+								      <td></td>
+								      <td><label th:text="#{odontogram.deciduous}">Deciduous</label><input type="text" pattern="\d*" maxlength="2" class="form-control w-50"/></td>
+								    </tr>								        						    							    
+								  </tbody>
+								</table>				
+							</div>
+										
 							<div class="col-sm-12">
 								<label for="procedures" class="form-label" th:text="#{odontogram.procedures}">Procedures</label>:
 								<textarea class="form-control" th:field="*{procedures}" th:errorclass="is-invalid" 

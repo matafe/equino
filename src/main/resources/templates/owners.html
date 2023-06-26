@@ -45,7 +45,7 @@
 						</tbody>
 					</table>
 				    <a class="btn btn-primary" href="#" th:href="@{/owner}" th:text="#{btn.new}">New</a>
-				    <a class="btn btn-secondary" href="#" role="button" th:href="@{/animal}" th:text="#{owner.add.animal}">Add Animal</a>
+				    <a class="btn btn-secondary" href="#" role="button" th:href="@{'/animal'+${owner != null ? '?ownerId='+owner.id : ''}}" th:text="#{owner.add.animal}">Add Animal</a>
 				</div>
 				    
 			</div>

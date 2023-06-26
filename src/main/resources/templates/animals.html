@@ -45,7 +45,7 @@
 						</tbody>
 					</table>
 				    <a class="btn btn-primary" href="#" th:href="@{/animal}" role="button" th:text="#{btn.new}">New</a>
-				    <a class="btn btn-secondary" href="#" role="button" th:href="@{/odontogram}" th:text="#{animals.add.odontogram}">Add Odontogram</a>
+				    <a class="btn btn-secondary" href="#" role="button" th:href="@{'/odontogram'+${animal != null ? '?animalId='+animal.id : ''}}" th:text="#{animals.add.odontogram}">Add Odontogram</a>
 				</div>
 				    
 			</div>

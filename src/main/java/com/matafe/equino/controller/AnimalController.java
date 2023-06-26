@@ -26,6 +26,7 @@ import com.matafe.equino.model.Owner;
 import com.matafe.equino.repository.AnimalRepository;
 import com.matafe.equino.repository.OwnerRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Controller
@@ -52,8 +53,16 @@ public class AnimalController implements MessageSourceAware {
 	}
 
 	@GetMapping("/animal")
-	public String animalForm(Animal animal, Model model) {
+	public String animalForm(Animal animal, Model model, HttpServletRequest request) {
 		List<Owner> owners = this.ownerRepository.findAll();
+		
+		// pre-select
+		String ownerId = (String) request.getParameter("ownerId");
+		if (ownerId != null && !ownerId.trim().isEmpty()) {
+			Optional<Owner> found = this.ownerRepository.findById(Long.valueOf(ownerId));
+			found.ifPresent(animal::setOwner);
+			model.addAttribute("owner", found.get());
+		}
 
 		model.addAttribute("activePage", "animal");
 		model.addAttribute("genders", Gender.values());
@@ -64,16 +73,17 @@ public class AnimalController implements MessageSourceAware {
 
 	@PostMapping("/animal")
 	public String saveAnimal(@Valid Animal animal, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes, Locale locale) {
+			RedirectAttributes attributes, Locale locale, HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
-			return animalForm(animal, model);
+			return animalForm(animal, model, request);
 		}
 
 		animalRepository.save(animal);
 
 		attributes.addFlashAttribute("message",
 				messageSource.getMessage("animal.saved", new String[] { animal.getName() }, locale));
+		attributes.addFlashAttribute("animal", animal);
 
 		return "redirect:/animals";
 	}

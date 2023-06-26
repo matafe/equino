@@ -70,6 +70,7 @@ public class OwnerController implements MessageSourceAware {
 
 		attributes.addFlashAttribute("message",
 				messageSource.getMessage("owner.saved", new String[] { owner.getName() }, locale));
+		attributes.addFlashAttribute("owner", owner);
 
 		return "redirect:/owners";
 	}

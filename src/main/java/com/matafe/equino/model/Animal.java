@@ -47,6 +47,9 @@ public class Animal implements Comparable<Animal>, Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
 
+	@Column(name = "owner_id", insertable=false, updatable=false, nullable = false)
+	private Long ownerId;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "animal", fetch = FetchType.LAZY)
 	private List<Odontogram> odontograms;
 
@@ -91,6 +94,10 @@ public class Animal implements Comparable<Animal>, Serializable {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public Long getOwnerId() {
+		return ownerId;
 	}
 
 	public Owner getOwner() {
