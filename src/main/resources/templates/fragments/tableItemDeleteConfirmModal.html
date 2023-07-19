@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html th:attr="lang=${lang}" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="tableItemDeleteConfirmModal" class="modal fade"
+	tabindex="-1" th:id="tableItemDeleteConfirmModal" aria-labelledby="itemModalLabel"
+	aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="itemModalLabel"
+							th:text="#{label.confirm.delete}">Confirm Delete</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<span th:text="#{label.confirm.message}">Are you sure you
+							want to delete this record?</span>
+					</div>
+					<div class="modal-footer">
+						<button id="modal-cancel" type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal" th:text="#{btn.cancel}">Cancel</button>
+						<a id="modal-confirm" class="btn btn-primary" href="#" role="button"
+							th:text="#{btn.confirm}">Confirm</a>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$('#tableItemDeleteConfirmModal').on('show.bs.modal', function(event) {
+					const button = event.relatedTarget;
+					const confirmUrl = button.getAttribute('data-bs_confirmUrl');
+					$("#modal-confirm").attr("href", confirmUrl);
+				});
+			</script>
+</div>
+
+</html>

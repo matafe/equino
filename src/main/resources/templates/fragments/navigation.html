@@ -14,9 +14,10 @@
 							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" 
 								aria-expanded="false" th:text="#{navigation.add}">Add</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#"  th:href="@{/owner}" th:text="#{owner}">Owner</a></li>
-								<li><a class="dropdown-item" href="#" th:href="@{/animal}" th:text="#{animal}">Animal</a></li>
-								<li><a class="dropdown-item" href="#" th:href="@{/odontogram}" th:text="#{odontogram}">Odontograma</a></li>
+								<li><a class="dropdown-item" href="#"  th:href="@{/owners/add}" th:text="#{owner}">Owner</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/breeds/add}" th:text="#{breed}">Breed</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/animals/add}" th:text="#{animal}">Animal</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/odontograms/add}" th:text="#{odontogram}">Odontograms</a></li>
 							</ul>
 						</li>					
 						<li class="nav-item dropdown">
@@ -24,7 +25,9 @@
 								aria-expanded="false" th:text="#{navigation.list}">List</a>
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item" href="#"  th:href="@{/owners}" th:text="#{owners}">Owners</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/breeds}" th:text="#{breeds}">Breeds</a></li>
 								<li><a class="dropdown-item" href="#" th:href="@{/animals}" th:text="#{animals}">Animals</a></li>
+								<li><a class="dropdown-item" href="#" th:href="@{/odontograms}" th:text="#{odontograms}">Odontograms</a></li>
 							</ul>
 						</li>					
 						<!-- 

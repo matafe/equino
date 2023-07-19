@@ -1,0 +1,47 @@
+<!doctype html>
+<html th:attr="lang=${lang}" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<title th:text="#{breed}">Breed</title>
+		<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<div th:replace="~{fragments/navigation :: navigation}"></div>  
+	
+		<main class="container">
+			<div class="bg-body-tertiary p-3 rounded">
+				<h1><span th:text="#{breed}">Breed</span></h1>
+				
+				<div>
+					<form action="#" th:action="@{/breeds/add}" th:object="${breed}" method="post" novalidate>
+						<div class="row g-3">
+						
+							<div class="col-sm-12">
+								<label for="name" class="form-label" th:text="#{breed.name}">Name</label>:
+								<input type="text" id="name" th:field="*{name}" class="form-control" th:errorclass="is-invalid"
+									th:classappend="${#fields.hasAnyErrors() && !#fields.hasErrors('name')}? is-valid" 
+									aria-describedby="nameServerValidationFeedback" autocomplete="off" maxlength="254" required>
+								<div id="nameServerValidationFeedback" class="invalid-feedback" th:errors="*{name}">
+									Name invalid
+								</div>
+							</div>
+							
+						</div>
+						<hr class="my-4">
+						<button class="btn btn-primary" type="submit" th:text="#{btn.save}">Save</button>
+					</form>
+				</div>
+				    
+			</div>
+		</main>
+		
+		<div th:replace="~{fragments/footer :: footer}"></div>  
+		
+    </body>
+    
+</html>

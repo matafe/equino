@@ -1,8 +1,10 @@
 package com.matafe.equino.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,9 +23,8 @@ public class Odontogram implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	private LocalDate checkUpDate;
-
-	private LocalDate nextCheckUpDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date checkUpDate;
 
 	@Column(length = 2000)
 	private String anamnesis;
@@ -71,20 +72,12 @@ public class Odontogram implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getCheckUpDate() {
+	public Date getCheckUpDate() {
 		return checkUpDate;
 	}
 
-	public void setCheckUpDate(LocalDate checkUpDate) {
+	public void setCheckUpDate(Date checkUpDate) {
 		this.checkUpDate = checkUpDate;
-	}
-
-	public LocalDate getNextCheckUpDate() {
-		return nextCheckUpDate;
-	}
-
-	public void setNextCheckUpDate(LocalDate nextCheckUpDate) {
-		this.nextCheckUpDate = nextCheckUpDate;
 	}
 
 	public Animal getAnimal() {

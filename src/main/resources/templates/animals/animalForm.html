@@ -1,0 +1,109 @@
+<!doctype html>
+<html th:attr="lang=${lang}" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<title th:text="#{navigation.animal}">Animal</title>
+		<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<div th:replace="~{fragments/navigation :: navigation}"></div>  
+	
+		<main class="container">
+			<div class="bg-body-tertiary p-3 rounded">
+				<h1><span th:text="#{animal}"></span></h1>
+				
+				<div>
+					<form action="#" th:action="@{/animals/add}" th:object="${animal}" method="post" novalidate>
+						<div class="row g-3">
+						
+							<div class="col-sm-12">
+								<label for="owner" class="form-label" th:text="#{owner}" th:field="*{owner}">Owner</label>:
+								<select id="owner" th:field="*{owner}" th:errorclass="is-invalid" class="form-select" 
+									th:if="${!owners.isEmpty}" aria-describedby="ownerFeedback" required>
+					                <option value="" th:text="#{label.select}">Select...</option>
+					                <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.name}">
+					            </select>
+					            <div th:if="${owners.isEmpty}">
+						            <small class="text-muted" 
+						            	th:text="#{animals.noOnwer}">No owner added.</small>
+						            <small class="text-muted"><a href="#" th:href="@{/owners/add}" th:text="#{add}">Add</a></small> 
+					            </div>
+								<div id="ownerFeedback" class="invalid-feedback" th:errors="*{owner}">
+									Please provide an Owner.
+								</div>
+							</div>
+							
+							<div class="col-sm-4">
+								<label for="breed" class="form-label" th:text="#{breed}" th:field="*{breed}">Owner</label>:
+								<select id="breed" th:field="*{breed}" th:errorclass="is-invalid" class="form-select" 
+									th:if="${!breeds.isEmpty}" aria-describedby="breedFeedback" required>
+					                <option value="" th:text="#{label.select}">Select...</option>
+					                <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}">
+					            </select>
+					            <div th:if="${breeds.isEmpty}">
+						            <small class="text-muted" 
+						            	th:text="#{animals.noBreed}">No breed added.</small>
+						            <small class="text-muted"><a href="#" th:href="@{/breeds/add}" th:text="#{add}">Add</a></small> 
+					            </div>
+								<div id="breedFeedback" class="invalid-feedback" th:errors="*{owner}">
+									Please provide a Breed.
+								</div>
+							</div>														
+						
+							<div class="col-sm-6">
+								<label for="name" class="form-label" th:text="#{animal.name}">Name</label>:
+								<input type="text" id="name" th:field="*{name}" class="form-control" th:errorclass="is-invalid"
+									th:classappend="${#fields.hasAnyErrors() && !#fields.hasErrors('name')}? is-valid" 
+									aria-describedby="nameFeedback" required
+									th:disabled="${owners.isEmpty}">
+								<div id="nameFeedback" class="invalid-feedback" th:errors="*{name}">
+									Name invalid
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<label for="age" class="form-label" th:text="#{animal.age}">Age</label>:
+								<input type="number" id="age" th:field="*{age}" class="form-control" min="0" max="100"
+									maxlength="3"
+									oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+									inputmode="numeric" pattern="[0-9]*"
+									th:errorclass="is-invalid" 
+									th:classappend="${#fields.hasAnyErrors() && !#fields.hasErrors('age')}? is-valid" 
+									aria-describedby="ageFeedback" size="10" required
+									th:disabled="${owners.isEmpty}">
+								<div id="ageFeedback" class="invalid-feedback" th:errors="*{age}">
+									Age invalid
+								</div>
+							</div>
+							
+							<div class="col-sm-2">
+								<label for="gender" class="form-label" th:text="#{animal.gender}">Gender</label>:
+								<select id="gender" th:field="*{gender}" th:errorclass="is-invalid" class="form-select"  
+									th:classappend="${#fields.hasAnyErrors() && !#fields.hasErrors('gender')}? is-valid" 
+									th:disabled="${owners.isEmpty}" aria-describedby="genderFeedback" required>
+					                <option value="" th:text="#{label.select}">Select...</option>
+					                <option th:each="gender : ${genders}" th:value="${gender}" th:text="#{${gender}}">
+					              </select>								
+								<div id="genderFeedback" class="invalid-feedback" th:errors="*{gender}">
+									Please provide a valid gender.
+								</div>
+							</div>
+							
+						</div>
+						<hr class="my-4">
+						<button class="btn btn-primary" type="submit" th:text="#{btn.save}" th:disabled="${owners.isEmpty}">Save</button>
+					</form>
+				</div>		    
+			  
+			</div>
+		</main>
+	
+		<div th:replace="~{fragments/footer :: footer}"></div>  
+		
+    </body>
+    
+</html>

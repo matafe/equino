@@ -1,0 +1,52 @@
+<!doctype html>
+<html th:attr="lang=${lang}" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<title th:text="#{odontograms}">Owner</title>
+		<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<div th:replace="~{fragments/navigation :: navigation}"></div>  
+	
+		<main class="container">
+			<div class="bg-body-tertiary p-3 rounded">
+				<h1><span th:text="#{odontograms}">Odontograms</span></h1>
+				
+				<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${not #strings.isEmpty(message)}">
+					<span th:text="${message}">Record successfully saved!</span>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+								
+				<div class="table-responsive-sm">
+				
+					<table class="table table-bordered">
+						<thead >
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col" th:text="#{odontogram.checkUpDate}">checkUpDate</th>
+								<th scope="col" th:text="#{animal}">Animal</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="odontogram, iStat : ${odontograms}">
+								<th scope="row" th:text="${iStat.count}">1</th>
+								<td th:text="${#dates.format(odontogram.checkUpDate, 'dd-MM-yyyy')}">Name</td>
+								<td th:text="${odontogram.animal.name}">Animal</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				    
+			</div>
+		</main>
+		
+		<div th:replace="~{fragments/footer :: footer}"></div>  
+		
+    </body>
+    
+</html>

@@ -1,8 +1,5 @@
 package com.matafe.equino.controller;
 
-import static java.util.stream.Collectors.toList;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -16,26 +13,31 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.matafe.equino.dto.AnimalDTO;
 import com.matafe.equino.model.Animal;
+import com.matafe.equino.model.Breed;
 import com.matafe.equino.model.Gender;
 import com.matafe.equino.model.Owner;
 import com.matafe.equino.repository.AnimalRepository;
+import com.matafe.equino.repository.BreedRepository;
 import com.matafe.equino.repository.OwnerRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Controller
+@RequestMapping("/animals")
 public class AnimalController implements MessageSourceAware {
 
 	private MessageSource messageSource;
 
 	@Autowired
 	private AnimalRepository animalRepository;
+	
+	@Autowired
+	private BreedRepository breedRepository;
 
 	@Autowired
 	private OwnerRepository ownerRepository;
@@ -45,17 +47,18 @@ public class AnimalController implements MessageSourceAware {
 		this.messageSource = messageSource;
 	}
 
-	@GetMapping("/animals")
+	@GetMapping
 	public String animals(Model model) {
 		List<Animal> animals = this.animalRepository.fetchAll();
 		model.addAttribute("animals", animals);
-		return "animals";
+		return "animals/animals";
 	}
 
-	@GetMapping("/animal")
+	@GetMapping("add")
 	public String animalForm(Animal animal, Model model, HttpServletRequest request) {
+		List<Breed> breeds = this.breedRepository.findAll();
 		List<Owner> owners = this.ownerRepository.findAll();
-		
+
 		// pre-select
 		String ownerId = (String) request.getParameter("ownerId");
 		if (ownerId != null && !ownerId.trim().isEmpty()) {
@@ -66,12 +69,13 @@ public class AnimalController implements MessageSourceAware {
 
 		model.addAttribute("activePage", "animal");
 		model.addAttribute("genders", Gender.values());
+		model.addAttribute("breeds", breeds);
 		model.addAttribute("owners", owners);
 
-		return "animal";
+		return "animals/animalForm";
 	}
 
-	@PostMapping("/animal")
+	@PostMapping("add")
 	public String saveAnimal(@Valid Animal animal, BindingResult bindingResult, Model model,
 			RedirectAttributes attributes, Locale locale, HttpServletRequest request) {
 
@@ -88,17 +92,26 @@ public class AnimalController implements MessageSourceAware {
 		return "redirect:/animals";
 	}
 
-	@GetMapping(value = "owner/{id}/animals", produces = "application/json")
-	public @ResponseBody List<AnimalDTO> getAnimalsFromOwner(@PathVariable Long id) {
-		Optional<Owner> ownerOptional = this.ownerRepository.findById(id);
-		if (ownerOptional.isPresent()) {
-			Owner owner = ownerOptional.get();
-			List<Animal> animals = this.animalRepository.findByOwner(owner);
-			return animals.stream().map(a -> new AnimalDTO(a.getId(), a.getName())).collect(toList());
+	@GetMapping("{id}/delete")
+	public String delete(@PathVariable Long id, RedirectAttributes attributes, Locale locale) {
 
-		}
-		return Collections.emptyList();
+		animalRepository.deleteById(id);
+		attributes.addFlashAttribute("message", messageSource.getMessage("record.deleted", new String[0], locale));
 
+		return "redirect:/animals";
 	}
+
+//	@GetMapping(value = "owners/{id}/animals", produces = "application/json")
+//	public @ResponseBody List<AnimalDTO> getAnimalsFromOwner(@PathVariable Long id) {
+//		Optional<Owner> ownerOptional = this.ownerRepository.findById(id);
+//		if (ownerOptional.isPresent()) {
+//			Owner owner = ownerOptional.get();
+//			List<Animal> animals = this.animalRepository.findByOwner(owner);
+//			return animals.stream().map(a -> new AnimalDTO(a.getId(), a.getName())).collect(toList());
+//
+//		}
+//		return Collections.emptyList();
+//
+//	}
 
 }

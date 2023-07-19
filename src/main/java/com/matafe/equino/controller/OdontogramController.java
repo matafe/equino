@@ -1,6 +1,7 @@
 package com.matafe.equino.controller;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matafe.equino.model.Animal;
@@ -26,6 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @Controller
+@RequestMapping("/odontograms")
 public class OdontogramController implements MessageSourceAware {
 
 	private MessageSource messageSource;
@@ -43,8 +46,15 @@ public class OdontogramController implements MessageSourceAware {
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
+	
+	@GetMapping
+	public String odontograms(Model model) {
+		List<Odontogram> odontograms = this.odontogramRepository.findAll();
+		model.addAttribute("odontograms", odontograms);
+		return "odontograms/odontograms";
+	}
 
-	@GetMapping("/odontogram")
+	@GetMapping("add")
 	public String odontogramForm(Odontogram odontogram, Model model, HttpServletRequest request) {
 		List<Owner> owners = this.ownerRepository.findAll();
 
@@ -55,18 +65,21 @@ public class OdontogramController implements MessageSourceAware {
 			found.ifPresent(odontogram::setAnimal);
 			Animal animalFound = found.get();
 			model.addAttribute("animal", animalFound);
-			model.addAttribute("owner", ownerRepository.findById(animalFound.getOwnerId()).get());
+			//model.addAttribute("owner", ownerRepository.findById(animalFound.getOwnerId()).get());
+			model.addAttribute("owner", animalFound.getOwner());
 		}
 		
 		model.addAttribute("activePage", "odontogram");
 		model.addAttribute("owners", owners);
 		
-		odontogram.setCheckUpDate(LocalDate.now());
+		model.addAttribute("standardDate", new Date());
+		
+		odontogram.setCheckUpDate(new Date());
 
-		return "odontogram";
+		return "odontograms/odontogramForm";
 	}
 
-	@PostMapping("/odontogram")
+	@PostMapping("add")
 	public String saveOdontogram(@Valid Odontogram odontogram, BindingResult bindingResult, Model model,
 			RedirectAttributes attributes, Locale locale, HttpServletRequest request) {
 
